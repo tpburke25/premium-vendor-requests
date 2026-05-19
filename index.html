@@ -480,7 +480,7 @@ async function loadData() {
     let opps = [], page = 0;
     while (true) {
       const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/tbl_opportunities?select=fts_id,account_name,parent_account,num_locations,opportunity_owner,close_date&stage=eq.Closed Won&limit=${pageSize}&offset=${page * pageSize}`,
+        `${SUPABASE_URL}/rest/v1/tbl_all_opportunities?select=fts_id,account_name,parent_account,num_locations,opportunity_owner,close_date&limit=${pageSize}&offset=${page * pageSize}`,
         { headers }
       );
       if (!res.ok) throw new Error('Failed to load opportunities');
