@@ -1,0 +1,30 @@
+name: Sync Vendor Opps → Supabase
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'   # Every 4 hours
+  workflow_dispatch:         # Manual trigger from GitHub Actions tab
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run sync
+        env:
+          SF_USERNAME:     ${{ secrets.SF_USERNAME }}
+          SF_PASSWORD:     ${{ secrets.SF_PASSWORD }}
+          SF_INSTANCE_URL: ${{ secrets.SF_INSTANCE_URL }}
+          SUPABASE_URL:    ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY:    ${{ secrets.SUPABASE_KEY }}
+        run: python sync_vendor_opps.py
